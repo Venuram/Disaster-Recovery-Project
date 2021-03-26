@@ -4,16 +4,18 @@ This project is part of Udacity's nanodegree program.
 
 https://view6914b2f4-3001.udacity-student-workspaces.com
 
-1. Required Libraries
+1. Required Libraries:
+
 Besides the libraries included in the Anaconda distribution for Python 3.6 the following libraries have been included in this project:
 
 nltk
+
 sqlalchemy
 
 
 2. Introduction
 
-Figure 8 helps companies transform they data by providing human annotators and machine learning to annotate data at all scales. Disaster response is one of events that greatly benefits from data and machine learning modeling. In this project I propose an approach to social media messages annotation. NLP allows the extraction of great significance in text, understanding how a model classifies and predicts needed responses in disaster cases provides good understanding of the power of words in functional responses.
+   Figure 8 helps companies transform they data by providing human annotators and machine learning to annotate data at all scales. Disaster response is one of events that        greatly benefits from data and machine learning modeling. In this project I propose an approach to social media messages annotation. NLP allows the extraction of great        significance in text, understanding how a model classifies and predicts needed responses in disaster cases provides good understanding of the power of words in functional    responses.
 
 In this project I will be using a data set containing messages that were sent during disaster events and build a classifier to identify messages or events in need of attention or relief. The data cleaning and model building will be using pipelines, automating repetitive steps, and preventing data leakage.
 
