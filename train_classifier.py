@@ -27,7 +27,7 @@ def load_data(database_filepath):
     
     X = df['message'] # Placing the message column
     Y = df.drop(['message', 'genre', 'id', 'original'], axis = 1) # Holding the transformed categories' columns
-    category_names = y.columns.tolist()
+    category_names = Y.columns.tolist()
     
     return X,Y, category_names
 
@@ -49,16 +49,16 @@ def build_model():
     # Pipeline1 created for the purpose of combining different tokenizers and classifier together for efficient model usage
     pipeline = Pipeline([
                 ('vect', CountVectorizer(tokenizer=tokenize)),
+                ('best', TruncatedSVD()),
                 ('tfidf', TfidfTransformer()),
-                ('clf', MultiOutputClassifier(RandomForestClassifier()))    
+                ('clf', MultiOutputClassifier(AdaBoostClassifier()))    
                 ])
     # Involving paramters to make the search/processing better using GridSearch feature and storing it in CV.
 
-    parameters =  {'tfidf__use_idf': (True, False), 
-              'clf__estimator__n_estimators': [50, 100], 
-              'clf__estimator__min_samples_split': [2, 4]} 
+    parameters =  {'clf__estimator__learning_rate': [0.1, 0.3],
+                   'clf__estimator__n_estimators': [100, 200]} 
     
-    cv = GridSearchCV(pipeline, param_grid=parameters, n_jobs=-1, verbose=2)
+    cv = GridSearchCV(estimator=pipeline, cv=3, scoring='f1_weighted', verbose=3, param_grid=parameters)
     
     return cv
 
@@ -69,7 +69,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     y_pred_pd = pd.DataFrame(y_pred, columns = category_names)
     
     
-    print(classification_report(y_test, y_pred, target_names = category_names))
+    print(classification_report(Y_test, y_pred, target_names = category_names))
 
 
 def save_model(model, model_filepath):
